@@ -10,6 +10,7 @@ import net.minecraft.inventory.Slot;
 import net.supercraftalex.liquido.Booleans;
 import net.supercraftalex.liquido.events.EventUpdate;
 import net.supercraftalex.liquido.modules.Category;
+import net.supercraftalex.liquido.modules.Config;
 import net.supercraftalex.liquido.modules.Module;
 import net.supercraftalex.liquido.utils.Timer;
 
@@ -20,7 +21,7 @@ public class ChestStealer extends Module{
 	}
 	
 	Timer timer = new Timer();
-	public static double delay = 100;
+	double delay = 1000;
 
 	@EventTarget
 	public void onUpdate(EventUpdate event) {
@@ -33,7 +34,7 @@ public class ChestStealer extends Module{
 					if(mc.thePlayer.openContainer == null){
 						break;
 					}
-					Slot slot =(Slot)chest.inventorySlots.get(i);
+					Slot slot = (Slot)chest.inventorySlots.get(i);
 					if(slot.getStack() == null)
 						continue;
 					if(!timer.check((float)(delay == 0 ? 1 : delay))){

@@ -1,6 +1,8 @@
 package net.supercraftalex.liquido.modules;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -13,6 +15,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.supercraftalex.liquido.Liquido;
 
 public class Module {
+	
+	private List<Config> configs = new ArrayList<Config>();
+	private int id;
 	
 	public String getName() {
 		return name;
@@ -44,6 +49,14 @@ public class Module {
 
 	public void setKeyBind(int keyBind) {
 		this.keyBind = keyBind;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int n_id) {
+		this.id = n_id;
 	}
 	
 	public boolean isCategory(Category category) {
@@ -199,6 +212,29 @@ public class Module {
 	
 	public void setUseItemKeyPressed(boolean pressed){
 		mc.gameSettings.keyBindUseItem.pressed = pressed;
+	}
+	
+	//ConfigSystem
+	public void addConfig(Config c) {
+		this.configs.add(c);
+	}
+	public List<Config> getConfigs() {
+		return this.configs;
+	}
+	public Config getConfigByName(String name) {
+		for(Config c : this.configs) {
+			if(c.getName().equalsIgnoreCase(name)) {
+				return c;
+			}
+		}
+		return null;
+	}
+	public void setConfigByName(String name, Object o) {
+		for(Config c : this.configs) {
+			if(c.getName().equalsIgnoreCase(name)) {
+				c.setValue(o);
+			}
+		}
 	}
 	
 }

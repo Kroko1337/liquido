@@ -12,6 +12,7 @@ import net.supercraftalex.liquido.Booleans;
 import net.supercraftalex.liquido.Liquido;
 import net.supercraftalex.liquido.events.EventUpdate;
 import net.supercraftalex.liquido.modules.Category;
+import net.supercraftalex.liquido.modules.Config;
 import net.supercraftalex.liquido.modules.Module;
 import net.supercraftalex.liquido.utils.PacketUtils;
 
@@ -19,6 +20,7 @@ public class Jesus extends Module{
 
 	public Jesus() {
 		super("jesus", "Jesus", Keyboard.KEY_NONE, Category.MOVEMENT);
+		addConfig(new Config("legit", new Boolean(false)));
 	}
 	
 	public static boolean legit = false;
@@ -37,7 +39,7 @@ public class Jesus extends Module{
 	@EventTarget
 	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
-		legit = Booleans.Jesus_legit;
+		legit = new Boolean(getConfigByName("legit").getValue().toString());
 		PacketUtils.sendPacket(new C03PacketPlayer(true));
 		if(legit){
 			if(mc.thePlayer.isInWater()){

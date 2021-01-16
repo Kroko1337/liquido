@@ -7,6 +7,7 @@ import com.darkmagician6.eventapi.EventTarget;
 
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.supercraftalex.liquido.Booleans;
+import net.supercraftalex.liquido.events.EventUpdate;
 import net.supercraftalex.liquido.modules.Category;
 import net.supercraftalex.liquido.modules.Module;
 import net.supercraftalex.liquido.modules.impl.Movement.Fly;
@@ -22,13 +23,15 @@ public class FreeCam extends Module{
 	double oldZ;
 	EntityOtherPlayerMP fakePlayer;
 	
+	public double speed = 10.0;
+	
 	@EventTarget
-	public void onUpdate() {
+	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
 		mc.thePlayer.motionX = 0;
 		mc.thePlayer.motionY = 0;
 		mc.thePlayer.motionZ = 0;
-		mc.thePlayer.jumpMovementFactor = (float) Fly.flySpeed / 75;
+		mc.thePlayer.jumpMovementFactor = (float) speed / 75;
 		
 		if(mc.gameSettings.keyBindJump.pressed){
 			mc.thePlayer.motionY += Fly.flySpeed / 25;

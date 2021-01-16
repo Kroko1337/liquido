@@ -19,7 +19,7 @@ public class NoFall extends Module {
 	}
 	
 	@EventTarget
-	public void onUpdate(EventUpdate e) {
+	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
 		if(p.fallDistance != 0){
 			PacketUtils.sendPacket(new C03PacketPlayer(true));

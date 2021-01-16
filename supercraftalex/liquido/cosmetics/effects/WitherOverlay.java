@@ -10,15 +10,21 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.supercraftalex.liquido.Booleans;
+import net.supercraftalex.liquido.cosmetics.Cosmetic;
 import net.supercraftalex.liquido.cosmetics.capes.Cape;
 
-public class WitherOverlay implements LayerRenderer<AbstractClientPlayer>{
+public class WitherOverlay extends Cosmetic implements LayerRenderer<AbstractClientPlayer>{
 	
     private static final ResourceLocation WITHER_ARMOR = new ResourceLocation("textures/entity/wither/wither_armor.png");
-    private final RenderPlayer witherRenderer;
+    private RenderPlayer witherRenderer;
     private ModelPlayer witherModel = new ModelPlayer(0.5F, true);
 	
+    public WitherOverlay() {
+    	super("whiter","WhiterOverlay");
+	}
+    
     public WitherOverlay(RenderPlayer renderPlayer) {
+    	super("whiter","WhiterOverlay");
 		this.witherRenderer = renderPlayer;
 		this.witherModel = renderPlayer.getMainModel();
 	}
@@ -26,8 +32,8 @@ public class WitherOverlay implements LayerRenderer<AbstractClientPlayer>{
 	@Override
 	public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_, float p_177141_3_,
 		float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale) {
-        if(!Booleans.Cosmetic_Wither) {
-        	return;
+        if(!this.isToggled()) {
+        	//return;
         }
         GlStateManager.depthMask(!entitylivingbaseIn.isInvisible());
         this.witherRenderer.bindTexture(WITHER_ARMOR);

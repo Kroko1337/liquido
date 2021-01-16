@@ -2,15 +2,21 @@ package net.supercraftalex.liquido;
 
 import java.io.File;
 import java.sql.*;
+import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
+import com.thealtening.auth.TheAlteningAuthentication;
+import com.thealtening.auth.service.ServiceSwitcher;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumParticleTypes;
 import net.supercraftalex.Discord.DiscordRP;
 import net.supercraftalex.liquido.commands.CommandManager;
+import net.supercraftalex.liquido.cosmetics.CosmeticManager;
+import net.supercraftalex.liquido.gui.click.GuiClickUI;
 import net.supercraftalex.liquido.modules.ModuleManager;
 import net.supercraftalex.liquido.utils.Logger;
 import net.supercraftalex.liquido.utils.TimeHelper;
@@ -24,9 +30,10 @@ public class Liquido {
 	public static Logger logger;
 	public ModuleManager moduleManager;
 	public CommandManager commandManager;
+	public CosmeticManager cosmeticManager;
 	private int tickRepeat = 0;
 	public static Minecraft mc = Minecraft.getMinecraft();
-
+	
 	public File direcionary;
 
 	public static final Liquido INSTANCE = new Liquido();
@@ -45,6 +52,7 @@ public class Liquido {
 		//manager
 		commandManager = new CommandManager();
 		moduleManager = new ModuleManager();
+		cosmeticManager = new CosmeticManager();
 		
 		direcionary = new File(Minecraft.getMinecraft().mcDataDir, NAME);
 		if (!direcionary.exists()) {
@@ -77,10 +85,13 @@ public class Liquido {
 	
 	public void onTick() {
 		//Toggle Cosmetics
-		if(isKeyDown(Keyboard.KEY_NUMPAD1)) {Booleans.Cosmetic_Cape = !Booleans.Cosmetic_Cape;}
-		if(isKeyDown(Keyboard.KEY_NUMPAD2)) {Booleans.Cosmetic_Creeper = !Booleans.Cosmetic_Creeper;}
-		if(isKeyDown(Keyboard.KEY_NUMPAD3)) {Booleans.Cosmetic_Wither = !Booleans.Cosmetic_Wither;}
+		if(isKeyDown(Keyboard.KEY_NUMPAD1)) {cosmeticManager.getCosmeticByName("cape").toggle();}
+		if(isKeyDown(Keyboard.KEY_NUMPAD2)) {cosmeticManager.getCosmeticByName("whiter").toggle();}
+		if(isKeyDown(Keyboard.KEY_NUMPAD3)) {cosmeticManager.getCosmeticByName("creeper").toggle();}
 		if(isKeyDown(Keyboard.KEY_NUMPAD4)) {Booleans.Cosmetic_Particle = !Booleans.Cosmetic_Particle;}
+		
+		//clickui
+		if(isKeyDown(Keyboard.KEY_RSHIFT)) {mc.displayGuiScreen(new GuiClickUI());}
 		
 		//Toggle Cosmetic Configs
 		if(isKeyDown(Keyboard.KEY_NUMPAD7)) {
@@ -136,5 +147,5 @@ public class Liquido {
 	private static boolean isKeyDown(int k) {
 		return Keyboard.isKeyDown(k);
 	}
-
+	
 }

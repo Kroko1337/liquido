@@ -17,7 +17,7 @@ public class AutoRespawn extends Module {
 	}
 	
 	@EventTarget
-	public void onUpdate(EventUpdate e) {
+	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
 		if(mc.thePlayer.isDead){
 			mc.thePlayer.respawnPlayer();

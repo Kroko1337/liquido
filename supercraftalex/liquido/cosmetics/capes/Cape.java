@@ -14,26 +14,33 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.supercraftalex.liquido.Booleans;
 import net.supercraftalex.liquido.Liquido;
+import net.supercraftalex.liquido.cosmetics.Cosmetic;
 import net.supercraftalex.liquido.cosmetics.effects.CreeperOverlay;
 import net.supercraftalex.liquido.cosmetics.effects.WitherOverlay;
 import net.supercraftalex.liquido.utils.*;
 
-public class Cape implements LayerRenderer<AbstractClientPlayer> {
+public class Cape extends Cosmetic implements LayerRenderer<AbstractClientPlayer> {
 	
-    private final RenderPlayer playerRenderer;
+    private RenderPlayer playerRenderer;
     private static final String __OBFID = "CL_00002425";
 
+    public Cape()
+    {
+    	super("cape","Cape");
+    }
+    
     public Cape(RenderPlayer playerRendererIn)
     {
-        this.playerRenderer = playerRendererIn;
+    	super("cape","Cape");
+    	this.playerRenderer = playerRendererIn;
     }
     
 	@Override
     public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
     {
         if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible()) {
-            if(!Booleans.Cosmetic_Cape) {
-            	return;
+            if(!this.isToggled()) {
+            	//return;
             }
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.playerRenderer.bindTexture(new ResourceLocation("capes/"+Booleans.Cosmetic_Cape_Picture+".png"));

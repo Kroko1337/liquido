@@ -10,24 +10,30 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.supercraftalex.liquido.Booleans;
+import net.supercraftalex.liquido.cosmetics.Cosmetic;
 import net.supercraftalex.liquido.cosmetics.capes.Cape;
 
-public class CreeperOverlay implements LayerRenderer<AbstractClientPlayer> {
+public class CreeperOverlay extends Cosmetic implements LayerRenderer<AbstractClientPlayer> {
 	
     private static final ResourceLocation LIGHTNING_TEXTURE = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
-    private final RenderPlayer creeperRenderer;
+    private RenderPlayer creeperRenderer;
     private ModelPlayer creeperModel = new ModelPlayer(2.0F, true);
 	
+    public CreeperOverlay() {
+    	super("creeper","CreeperOverlay");
+    }
+    
     public CreeperOverlay(RenderPlayer renderPlayer) {
+    	super("creeper","CreeperOverlay");
 		this.creeperRenderer = renderPlayer;
 		this.creeperModel = renderPlayer.getMainModel();
-	}
+    }
     
 	@Override
 	public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_, float p_177141_3_,
 		float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale) {
-        if(!Booleans.Cosmetic_Creeper) {
-        	return;
+        if(!this.isToggled()) {
+        	//return;
         }
         boolean flag = entitylivingbaseIn.isInvisible();
         GlStateManager.depthMask(!flag);

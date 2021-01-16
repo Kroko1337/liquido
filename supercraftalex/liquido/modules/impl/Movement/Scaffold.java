@@ -28,6 +28,7 @@ import net.minecraft.util.Vec3;
 import net.supercraftalex.liquido.Booleans;
 import net.supercraftalex.liquido.events.EventUpdate;
 import net.supercraftalex.liquido.modules.Category;
+import net.supercraftalex.liquido.modules.Config;
 import net.supercraftalex.liquido.modules.Module;
 import net.supercraftalex.liquido.utils.PacketUtils;
 import net.supercraftalex.liquido.utils.TimeHelper;
@@ -44,6 +45,7 @@ public class Scaffold extends Module {
 		super("scaffold", "ScaffoldWalk", Keyboard.KEY_Z, Category.MOVEMENT);
 		before = 0.0D;
 		look = true;
+		addConfig(new Config("delay", new Integer(1)));
 	}
 	
 	public static class BlockData {
@@ -63,7 +65,7 @@ public class Scaffold extends Module {
 	@EventTarget
 	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
-		final int delay = Booleans.scaffold_delay;
+		final int delay = new Integer(getConfigByName("delay").getValue().toString());
 		if((mc.thePlayer.getHeldItem() != null) && (!mc.thePlayer.isSneaking()) && ((mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock))) {
 			
 		}

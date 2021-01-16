@@ -10,23 +10,25 @@ import net.supercraftalex.liquido.Booleans;
 import net.supercraftalex.liquido.Liquido;
 import net.supercraftalex.liquido.events.EventUpdate;
 import net.supercraftalex.liquido.modules.Category;
+import net.supercraftalex.liquido.modules.Config;
 import net.supercraftalex.liquido.modules.Module;
 
 public class Fly extends Module{
 
 	public Fly() {
 		super("fly", "Flight", Keyboard.KEY_F, Category.MOVEMENT);
+		addConfig(new Config("speed", new Integer(2)));
 	}
 	
-	public static double flySpeed = (20.0F / 25);
+	public static double flySpeed = 2.0;
 
 	boolean wasFlying;
 	boolean canFly;
 	
 	@EventTarget
-	public void onUpdate() {
+	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
-		flySpeed = Booleans.FlySpeed;
+		flySpeed = new Integer(getConfigByName("speed").getValue().toString());
 		mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
 		mc.thePlayer.motionY = 0;
 		mc.thePlayer.isAirBorne = false;

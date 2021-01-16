@@ -15,12 +15,14 @@ import net.minecraft.util.MathHelper;
 import net.supercraftalex.liquido.Booleans;
 import net.supercraftalex.liquido.events.EventUpdate;
 import net.supercraftalex.liquido.modules.Category;
+import net.supercraftalex.liquido.modules.Config;
 import net.supercraftalex.liquido.modules.Module;
 
 public class KillAura extends Module{
 
 	public KillAura() {
 		super("killaura", "KillAura", Keyboard.KEY_R, Category.COMBAT);
+		addConfig(new Config("delay", new Integer(4)));
 	}
 	
 	@EventTarget
@@ -48,7 +50,7 @@ public class KillAura extends Module{
 
 			float f = mc.thePlayer.getDistanceToEntity(entityplayer);
 
-			if (f < 4F && mc.thePlayer.canEntityBeSeen(entityplayer) && delay > Booleans.KillAura_delay && !entityplayer.isInvisible() && !entityplayer.isSpectator()) {
+			if (f < 4F && mc.thePlayer.canEntityBeSeen(entityplayer) && delay > new Integer(getConfigByName("delay").getValue().toString()) && !entityplayer.isInvisible() && !entityplayer.isSpectator()) {
 				faceEntity(entityplayer);
 				mc.playerController.attackEntity(mc.thePlayer, entityplayer);
 				delay = 0;

@@ -31,9 +31,7 @@ public class ModuleManager {
 		addModule(new NoFall());
 		addModule(new FreeCam());
 		addModule(new AutoRespawn());
-		addModule(new FreeCam());
 		addModule(new Speed());
-		addModule(new Bhop());
 		addModule(new AntiFire());
 		addModule(new Aimbot());
 		addModule(new ChestStealer());
@@ -42,6 +40,12 @@ public class ModuleManager {
 		addModule(new BowAimbot());
 		addModule(new Scaffold());
 		addModule(new AutoEat());
+		
+		int loop = 1;
+		for(Module m : modules) {
+			m.setId(loop);
+			loop++;
+		}
 		
 		Liquido.logger.Info("Loaded " + modules.size() + " Modules!");
 		

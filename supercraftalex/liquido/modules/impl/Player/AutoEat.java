@@ -18,7 +18,7 @@ public class AutoEat extends Module {
 	}
 
 	@EventTarget
-	public void onUpdate(EventUpdate e) {
+	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
 		int i = Util.firstFoodIndex(inventory().mainInventory);
 		if(player().canEat(false) && i != -1)
