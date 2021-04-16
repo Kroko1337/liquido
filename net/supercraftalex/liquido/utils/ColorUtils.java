@@ -22,9 +22,18 @@ public class ColorUtils {
 	}
 	
 	public static Color editColor(Color c,float rn,float gn,float bn) {
-	    float r = c.getRed()+rn;
-	    float g = c.getGreen()+gn;
-	    float b = c.getBlue()+bn;
+	    float r = rn;
+	    float g = gn;
+	    float b = bn;
+	    if(rn == 0) {
+	        r = c.getRed();
+	    }
+	    if(gn == 0) {
+	        g = c.getGreen();
+	    }
+	    if(bn == 0) {
+	        b = c.getBlue();
+	    }
 	    return new Color(r, g, b);
 	}
 	
