@@ -13,7 +13,7 @@ public class ThemeMain extends UITheme{
 	static Color m5 = Color.BLACK;
 
 	public ThemeMain() {
-		super("Main", m, m2, m3, m4, m5);
+		super("Main", "ALEX", m, m2, m3, m4, m5, m4, Color.WHITHE, Color.WHITE, Color.GREY, m5);
 	}
 
 }
