@@ -84,7 +84,7 @@ public class FileUtil {
 		}
 		return false;
 	}
-	public static boolean deleteFIle(File dir, String name) {
+	public static boolean deleteFile(File dir, String name) {
 	    File myObj = new File(dir.getAbsolutePath()+"/"+name); 
 	    if (myObj.delete()) { 
 	    	return true;
