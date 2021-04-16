@@ -1,3 +1,6 @@
 # Liquido_Client
-A Minecraft PVP+Hack Client
+A Minecraft Hack Client
 
+SkidList:
+-Scaffold2
+-some speeds
