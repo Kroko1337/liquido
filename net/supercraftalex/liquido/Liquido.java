@@ -40,9 +40,9 @@ import net.supercraftalex.liquido.utils.TimeHelper;
 public class Liquido {
 
 	public static String NAME = "Liquido Client";
-	public static String VERSION = "v0.3.8";
+	public static String VERSION = "v0.4.0";
 	public static List<String> AUTHORS = new ArrayList<String>();
-	public static String PREFIX = "ง7[LC] ง0";
+	public static String PREFIX = "ยง7[LC] ยง0";
 	public static Logger logger;
 	
 	public ModuleManager moduleManager;
