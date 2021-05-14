@@ -76,7 +76,7 @@ public class TargetStrafe extends Module {
     public void onEnable() {
     	EventManager.register(this);
     	if(getConfigByName("mode").getConfigMode().getValue().equalsIgnoreCase("skid")) { 
-    		Command.messageWithoutPrefix("§aTargetStrafe §c|§f Skid mode is skidded from a shit client named Koks.");
+    		Command.messageWithoutPrefix("Â§aTargetStrafe Â§c|Â§f Skid mode is skidded from a client named Koks.");
     	}
     }
     
