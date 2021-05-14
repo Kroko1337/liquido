@@ -31,7 +31,7 @@ public class GuiAltLogin extends GuiScreen {
 	private GuiScreen parent;
 	private String status;
 	private GuiTextField loginField;
-	Integer scroll = 0;
+	Integer scroll = 3;
 	
 	public GuiAltLogin(GuiScreen guiMainMenu) {
 		parent = guiMainMenu;
@@ -121,7 +121,7 @@ public class GuiAltLogin extends GuiScreen {
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		loginField.textboxKeyTyped(typedChar, keyCode);
 		if(keyCode == Keyboard.KEY_ESCAPE) {
-			actionPerformed(buttonList.get(1));
+			mc.displayGuiScreen(parent);
 		}
 		if(keyCode == Keyboard.KEY_RETURN) {
 			actionPerformed(buttonList.get(0));
@@ -145,11 +145,11 @@ public class GuiAltLogin extends GuiScreen {
 								mc.session = new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang");
 								Liquido.logger.Info(status = "Logged in as "+Liquido.getUserName());
 							} catch (Exception e) {
-								Liquido.logger.Error(status = "INVALID ALT");
+								Liquido.logger.Error(status = "INVALID ALT!");
 							}
 						} catch (Exception e) {
 							ErrorManager.addException(e);
-							Liquido.logger.Error(status = "ERROR");
+							Liquido.logger.Error(status = "ERROR!");
 						}
 					} else {
 						try {
@@ -162,10 +162,10 @@ public class GuiAltLogin extends GuiScreen {
 									auth.setPassword(args[1]);
 								} else {
 								    com.thealtening.auth.TheAlteningAuthentication.mojang().updateService(AlteningServiceType.MOJANG);
-								    FileUtil.writeFile(FileUtil.baseDir, "alts.txt", FileUtil.readFile(FileUtil.baseDir, "alts.txt")+"\n"+args[0]+":"+args[1]);
 									auth.setUsername(args[0]);
 									auth.setPassword(args[1]);
 								}
+								Boolean err = false;
 								try {
 									auth.logIn();
 									
@@ -173,7 +173,11 @@ public class GuiAltLogin extends GuiScreen {
 									this.loginField.setText("");
 									Liquido.logger.Info(status = Liquido.getUserName());
 								} catch (Exception e) {
-									Liquido.logger.Error(status = "INVALID ALT");
+									Liquido.logger.Error(status = "INVALID ALT!");
+									err = true;
+								}
+								if(!err) {
+								    FileUtil.writeFile(FileUtil.baseDir, "alts.txt", FileUtil.readFile(FileUtil.baseDir, "alts.txt")+"\n"+args[0]+":"+args[1]);
 								}
 							}
 							else {
@@ -194,8 +198,11 @@ public class GuiAltLogin extends GuiScreen {
 		} else if (button.id == 1) {
 			mc.displayGuiScreen(parent);
 		}
+		else if (button.id == 7) {
+			FileUtil.writeFile(FileUtil.baseDir, "alts.txt", "");
+		}
 		if (button.id == 4) {
-			if(scroll > 1 ) {
+			if(scroll > 2 ) {
 				scroll-=1;
 			}
 		}

@@ -21,8 +21,14 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.entity.item.EntityExpBottle;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityPainting;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
@@ -58,6 +64,7 @@ public class KillAura extends Module{
 		addConfig(new Config("antibot", new Boolean(true)));
 		addConfig(new Config("antibot+", new Boolean(true)));
 		addConfig(new Config("antibot++", new Boolean(true)));
+		addConfig(new Config("AOGC-ab", new Boolean(false)));
 	}
 	
 	@EventTarget
@@ -68,7 +75,6 @@ public class KillAura extends Module{
 	
 	@EventTarget
 	public void onUpdate(EventSentPacket event) {
-		if(!Booleans.hacking_enabled) {return;}
 		if(new Boolean(getConfigByName("silent").getValue().toString())) {
 			if(event.getPacket() instanceof C03PacketPlayer) {
 				C03PacketPlayer e = (C03PacketPlayer)event.getPacket();
@@ -103,6 +109,7 @@ public class KillAura extends Module{
 			int number = lowerBound + (int)(Math.random() * ((upperBound - lowerBound) + 1));
 			if (f <= new Integer(getConfigByName("range").getValue().toString()) && delay >= number  && entityplayer.ticksExisted > 50 && !entityplayer.isInvisible()) {
 				if(!(mc.thePlayer.canEntityBeSeen(entityplayer)) && !new Boolean(getConfigByName("TrougthWalls").getValue().toString())) {continue;}
+				if(entityplayer instanceof EntityItem || entityplayer instanceof EntityFishHook || entityplayer instanceof EntityArrow || entityplayer instanceof EntityPainting || entityplayer instanceof EntityExpBottle || entityplayer instanceof EntityXPOrb) {continue;}
 				if(entityplayer instanceof EntityPlayer) {if(!isNotBot((EntityPlayer)entityplayer)) {continue;}}
 				
 				if(new Boolean(getConfigByName("autoblock").getValue().toString()) && mc.gameSettings.keyBindUseItem.pressed) {
@@ -119,10 +126,12 @@ public class KillAura extends Module{
 				targetany = true;
 				
 				Minecraft.getMinecraft().thePlayer.swingItem();
-				if(new Boolean(getConfigByName("LegitAttack").getValue().toString())) {
-					Minecraft.getMinecraft().playerController.attackEntity(Minecraft.getMinecraft().thePlayer, entityplayer);
-				} else {
-					Minecraft.getMinecraft().clickMouse();
+				if(entityplayer != null) {
+					if(!new Boolean(getConfigByName("LegitAttack").getValue().toString())) {
+						Minecraft.getMinecraft().playerController.attackEntity(Minecraft.getMinecraft().thePlayer, entityplayer);
+					} else {
+						Minecraft.getMinecraft().clickMouse();
+					}
 				}
 				
 				if(new Boolean(getConfigByName("autoblock").getValue().toString())) {
@@ -186,6 +195,11 @@ public class KillAura extends Module{
 	        }
 	        return false;
 			
+		}
+		if(new Boolean(getConfigByName("AOGC-ab").getValue().toString())) {
+			if(p.posY - mc.thePlayer.posY >= 2) {
+				return false;
+			}
 		}
 		if(p.isDead || p.isInvisible()) {
 			return false;

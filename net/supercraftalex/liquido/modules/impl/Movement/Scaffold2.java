@@ -69,6 +69,18 @@ public class Scaffold2 extends Module {
 			lastZ = mc.thePlayer.posZ;
 		}
 		
+		int slot = 10;
+		for (int i = 0; i < 9; i++) {
+			try {
+				if(mc.thePlayer.inventory.getStackInSlot(i).getItem() instanceof ItemBlock && mc.thePlayer.inventory.getStackInSlot(i).stackSize != 0) {
+					mc.thePlayer.inventory.currentItem = i;
+				}
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		
 		tower = new Boolean(getConfigByName("tower").getValue().toString());
 		BlockPos pb = null;
 		pb = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);

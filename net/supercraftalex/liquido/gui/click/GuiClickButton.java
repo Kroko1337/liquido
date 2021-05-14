@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.supercraftalex.liquido.Booleans;
 import net.supercraftalex.liquido.Liquido;
+import net.supercraftalex.liquido.utils.ColorUtils;
 
 public class GuiClickButton extends GuiButton {
 	
@@ -25,9 +26,16 @@ public class GuiClickButton extends GuiButton {
 			this.hovered = (mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height);
 			final Color a =  Liquido.INSTANCE.themeManager.theme().clickUiButtons;
 			final FontRenderer var4 = mc.fontRendererObj;
+			
+			Gui.drawRect(this.xPosition-1, this.yPosition-1, this.xPosition+this.width+1, this.yPosition+this.height+1, ColorUtils.rainbowEffect(20L, 1.0F).getRGB());
+			Gui.drawRect(this.xPosition, this.yPosition, this.xPosition+this.width, this.yPosition+this.height, Color.BLACK.getRGB());
+			
+			this.drawCenteredString(var4, this.displayString, this.xPosition+this.width/2, this.yPosition+(this.height/2)-3, 0xA1E9AE);
+			/*
 			Gui.drawRect(this.xPosition, this.yPosition, this.xPosition+this.width, this.yPosition+this.height, Color.BLACK.getRGB());
 			Gui.drawRect(this.xPosition+1, this.yPosition+1, this.xPosition+this.width-1, this.yPosition+this.height-1, a.getRGB());
 			this.drawCenteredString(var4, this.displayString, this.xPosition+this.width/2, this.yPosition+(this.height/2)-3, 0xA1E9AE);
+			*/
 		} else if(this.visible && !Booleans.clickui_newmode) {
             FontRenderer fontrenderer = mc.fontRendererObj;
             mc.getTextureManager().bindTexture(buttonTextures);

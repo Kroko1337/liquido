@@ -7,6 +7,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.supercraftalex.liquido.Liquido;
+import net.supercraftalex.liquido.utils.ColorUtils;
 
 public class UIButton extends GuiButton {
 	
@@ -70,7 +71,10 @@ public class UIButton extends GuiButton {
 				a = new Color(b.getRed(),b.getGreen(),b.getBlue(),100);
 			}
 			final FontRenderer var4 = mc.fontRendererObj;
-			Gui.drawRect(this.xPosition, this.yPosition, this.xPosition+this.width, this.yPosition+this.height, a.getRGB());
+			
+			Gui.drawRect(this.xPosition-1, this.yPosition-1, this.xPosition+this.width+1, this.yPosition+this.height+1, ColorUtils.rainbowEffect(20L, 1.0F).getRGB());
+			Gui.drawRect(this.xPosition, this.yPosition, this.xPosition+this.width, this.yPosition+this.height, Color.BLACK.getRGB());
+			
 			this.drawCenteredString(var4, this.displayString, this.xPosition+this.width/2, this.yPosition+(this.height/2)-3, 0xA1E9AE);
 		}
 	}

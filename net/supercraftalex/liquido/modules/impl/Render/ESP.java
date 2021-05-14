@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import com.darkmagician6.eventapi.EventManager;
@@ -17,6 +18,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.supercraftalex.liquido.Booleans;
 import net.supercraftalex.liquido.commands.Command;
 import net.supercraftalex.liquido.events.EventUpdate;
 import net.supercraftalex.liquido.modules.Category;
@@ -29,38 +31,33 @@ public class ESP extends Module {
 		super("esp", "ESP", Keyboard.KEY_NONE, Category.RENDER);
 	}
 	
-	public void render() {
-		if(!this.toggled) {
-			return;
-		}
+	@EventTarget
+	public void onUpdate(EventUpdate event) {
+		if(!Booleans.hacking_enabled) {return;}
 		for(Object theObject : mc.theWorld.loadedEntityList) {
 			if(!(theObject instanceof EntityLivingBase))
 				continue;
 			
 			EntityLivingBase entity = (EntityLivingBase) theObject;
 			
-			if(entity != mc.thePlayer)
-				player(entity);
+			if(entity != mc.thePlayer) {
+				
+				Thread t = new Thread(() -> {
+					//Display.initContext();
+					Minecraft.getMinecraft();
+					Minecraft.getMinecraft().running = false;
+					int x = (int) (entity.posX - Minecraft.getMinecraft().getRenderManager().renderPosX);
+					int y = (int) (entity.posY - Minecraft.getMinecraft().getRenderManager().renderPosY);
+					
+					mc.currentScreen.drawRect(y, x, y+2, x+2, Color.BLACK.getRGB());
+					Minecraft.getMinecraft();
+				});
+				t.start();
+				
+			}
 			continue;
 			
 		}
-	}
-	
-	public void player(EntityLivingBase entity) {
-		float red = 0.5F;
-		float green = 0.5F;
-		float blue = 1F;
-		
-		double xPos = (entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * mc.timer.renderPartialTicks) - mc.getRenderManager().renderPosX;
-		double yPos = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * mc.timer.renderPartialTicks) - mc.getRenderManager().renderPosY;
-		double zPos = (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * mc.timer.renderPartialTicks) - mc.getRenderManager().renderPosZ;
-		
-		render(red, green, blue, xPos, yPos, zPos, entity.width, entity.height);
-	}
-	
-	
-	public void render(float red, float green, float blue, double x, double y, double z, float width, float height) {
-		RenderUtil.drawEntityESP(x, y, z, width, height, red, green, blue, 0.45F, 0F, 0F, 0F, 1F, 1F);
 	}
 	
 	@Override

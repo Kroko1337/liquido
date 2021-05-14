@@ -85,7 +85,7 @@ public class Scaffold extends Module {
 				) {
 			mc.thePlayer.rotationPitch = 90.0F;
 		} else {
-			mc.thePlayer.rotationPitch = 80.0F;
+			mc.thePlayer.rotationPitch = 85.0F;
 		}
 		
 		if(mc.thePlayer.posX - lastX >= 7.0D) {
@@ -283,6 +283,8 @@ public class Scaffold extends Module {
 		PlayerUtils.messageWithPrefix("Please look on the block!");
 		EventManager.register(this);
         this.StartY = ((int) this.mc.thePlayer.posY);
+        this.lastX = mc.thePlayer.posX;
+        this.lastZ = mc.thePlayer.posZ;
         this.StartPos = this.mc.thePlayer.getPosition();
         this.mc.gameSettings.keyBindForward.isKeyDown();
 	}

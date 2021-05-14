@@ -58,6 +58,12 @@ public class InvCleaner extends Module {
         if ((localItem instanceof ItemBed)) {
             return false;
         }
+        if ((localItem instanceof ItemEnchantedBook)) {
+            return false;
+        }
+        if ((localItem instanceof ItemBook)) {
+            return false;
+        }
         if ((localItem instanceof ItemArmor)) {
             return false;
         }
@@ -295,9 +301,7 @@ public class InvCleaner extends Module {
     
     @EventTarget
     public void onUpdate(EventUpdate event) {
-        if (this.mc.thePlayer.ticksExisted < 13) {
-            this.canopen = true;
-        }
+        this.canopen = true;
         if (this.itemSort == null) {
             loadItemSort();
         }
@@ -305,9 +309,6 @@ public class InvCleaner extends Module {
             this.startDelayHelper.reset();
         }
         if (!this.startDelayHelper.hasReached(this.startDelay)) {
-            return;
-        }
-        if (AutoArmor.isSomeArmorNeeded()) {
             return;
         }
         if (this.delayHelper.hasReached(this.currentDelay)) {

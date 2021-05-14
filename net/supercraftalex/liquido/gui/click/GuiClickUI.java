@@ -296,9 +296,9 @@ public class GuiClickUI extends GuiScreen
         	if(animationStage >= 2.2) {
         	if(c == Category.OPTIONS && Options) {
         		if(Booleans.isSlideAnimation) {
-                   	this.buttonList.add(new GuiClickButton(501, x-13, y, 80, 20, "HotbarAnimations"));
+                   	this.buttonList.add(new GuiClickButton(501, x-13, y, 80, 20, "Animations"));
             	} else {
-            		this.buttonList.add(new GuiClickButton(501, x-15, y, 82, 20, "HotbarAnimations"));
+            		this.buttonList.add(new GuiClickButton(501, x-15, y, 82, 20, "Animations"));
             	}
         		y = y + 20;
         	}

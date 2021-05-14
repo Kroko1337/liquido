@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import net.supercraftalex.liquido.Liquido;
+import net.supercraftalex.liquido.commands.Command;
 import net.supercraftalex.liquido.events.EventUpdate;
 import net.supercraftalex.liquido.modules.Category;
 import net.supercraftalex.liquido.modules.Config;
@@ -74,6 +75,9 @@ public class TargetStrafe extends Module {
     @Override
     public void onEnable() {
     	EventManager.register(this);
+    	if(getConfigByName("mode").getConfigMode().getValue().equalsIgnoreCase("skid")) { 
+    		Command.messageWithoutPrefix("§aTargetStrafe §c|§f Skid mode is skidded from a shit client named Koks.");
+    	}
     }
     
     @Override

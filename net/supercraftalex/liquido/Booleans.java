@@ -24,4 +24,8 @@ public class Booleans {
 	//render
 	public static boolean isSlideAnimation = false;
 	
+	
+	public static boolean isLatestversion = false;
+	public static String latestVersion = "v0.0.0";
+	
 }

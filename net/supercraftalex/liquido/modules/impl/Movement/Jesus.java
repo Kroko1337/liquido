@@ -48,6 +48,7 @@ public class Jesus extends Module{
 				mc.gameSettings.keyBindJump.pressed = false;
 			}
 		}else{
+			/*
 			if(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.1, mc.thePlayer.posZ)).getBlock() == Blocks.water){
 				mc.thePlayer.motionY = 0;
 				mc.thePlayer.onGround = true;
@@ -55,6 +56,10 @@ public class Jesus extends Module{
 			if(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()){
 				mc.thePlayer.motionY = 0.1;
 				mc.thePlayer.onGround = true;
+			}*/
+			if(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()){
+				//mc.thePlayer.motionY = 0.1;
+				mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.1, mc.thePlayer.posZ);
 			}
 		}
 	}

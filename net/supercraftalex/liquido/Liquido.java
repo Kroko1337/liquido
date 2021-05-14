@@ -50,7 +50,7 @@ import net.supercraftalex.liquido.utils.TimeHelper;
 public class Liquido {
 
 	public static String NAME = "Liquido Client";
-	public static String VERSION = "v0.4.0";
+	public static String VERSION = "v0.4.1";
 	public static List<String> AUTHORS = new ArrayList<String>();
 	public static String PREFIX = "§7[LC] §0";
 	public static Logger logger;
@@ -78,6 +78,8 @@ public class Liquido {
 
 	public void init() throws IOException {
 		
+		VersionChecker.initVersionInfo();
+		
 		AUTHORS.add("super_craft_alex");
 		
 		System.out.println("Loading " + NAME + " " + VERSION+ " by "+ AUTHORS.get(0));
@@ -100,6 +102,8 @@ public class Liquido {
 		}
 		
 		Bind.loadBindings();
+		
+		//TODO: Alt list import
 		
 		//TODO: API HERE
 		logger.Info("Loading API...");

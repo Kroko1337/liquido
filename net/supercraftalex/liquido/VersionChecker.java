@@ -8,39 +8,38 @@ import java.net.URL;
 public class VersionChecker {
 	
 	public static boolean isLatestVersion() {
-		try {
-			 BufferedReader input =  new BufferedReader(new InputStreamReader(new URL("http://supercraftalex.000webhostapp.com/clog.txt").openStream()));
-			 String line = null;
-			 int index = 0;
-			 while (( line = input.readLine()) != null){
-			      if(index == 0) {
-			    	  if(line.contains(Liquido.VERSION)) {
-			    		  return true;
-			    	  } else {
-			    		  return false;
-			    	  }
-			      }
-			      index++;
-			  }
-			 input.close();
-		} catch(Exception e) {Liquido.INSTANCE.logger.Error(e.getMessage());}
-		return false;
+		return Booleans.isLatestversion;
 	}
 	
 	public static String getLatestVersion() {
+		return Booleans.latestVersion;
+	}
+	
+	public static void initVersionInfo() {
 		try {
 			 BufferedReader input =  new BufferedReader(new InputStreamReader(new URL("http://supercraftalex.000webhostapp.com/clog.txt").openStream()));
 			 String line = null;
 			 int index = 0;
 			 while (( line = input.readLine()) != null){
 			      if(index == 0) {
-			    	  return line;
+			    	  Booleans.latestVersion = line;
 			      }
 			      index++;
 			  }
 			 input.close();
-		} catch(Exception e) {Liquido.INSTANCE.logger.Error(e.getMessage());}
-		return "-Error-";
+		} catch(Exception e) {}
+		try {
+			 BufferedReader input =  new BufferedReader(new InputStreamReader(new URL("http://supercraftalex.000webhostapp.com/clog.txt").openStream()));
+			 String line = null;
+			 int index = 0;
+			 while (( line = input.readLine()) != null){
+			      if(index == 0) {
+			    	  Booleans.isLatestversion = line.contains(Liquido.VERSION);
+			      }
+			      index++;
+			  }
+			 input.close();
+		} catch(Exception e) {}
 	}
 	
 }
