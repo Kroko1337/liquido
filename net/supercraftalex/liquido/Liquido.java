@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -38,6 +39,11 @@ import net.supercraftalex.liquido.commands.impl.Bind;
 import net.supercraftalex.liquido.config.ClientConfigManager;
 import net.supercraftalex.liquido.gui.Themes.ThemeManager;
 import net.supercraftalex.liquido.gui.click.GuiClickUI;
+import net.supercraftalex.liquido.gui.click.recode.ClickGUI;
+import net.supercraftalex.liquido.gui.click.recode.Panel;
+import net.supercraftalex.liquido.gui.click.recode.elements.ModuleButton;
+import net.supercraftalex.liquido.gui.click.recode.util.FontUtil;
+import net.supercraftalex.liquido.modules.Category;
 import net.supercraftalex.liquido.modules.Module;
 import net.supercraftalex.liquido.modules.ModuleManager;
 import net.supercraftalex.liquido.modules.impl.Exploits.KillInsults;
@@ -69,6 +75,8 @@ public class Liquido {
 	public Properties file_mods;
 	
 	public Entity target = null;
+	
+	public ClickGUI clickgui;
 
 	public static final Liquido INSTANCE = new Liquido();
 
@@ -103,8 +111,6 @@ public class Liquido {
 		
 		Bind.loadBindings();
 		
-		//TODO: Alt list import
-		
 		//TODO: API HERE
 		logger.Info("Loading API...");
 		api = new API("http://supercraftalex.net/liquido/api/");
@@ -117,29 +123,49 @@ public class Liquido {
 			//System.exit(0);
 		}
 		
-		//Making sentry ready
-		Sentry.init(options -> {
-			  options.setDsn("https://f11f3f36da0d4620b945c829700d1039@o578354.ingest.sentry.io/5734534");
-			  //options.setTracesSampleRate(1.0);
-			  options.setDebug(true);
-			  //options.setRelease(this.VERSION);
-		});
-		try {
-			throw new Exception("This is a test.");
-		} catch (Exception e) {
-			System.out.println("d");
-			Sentry.captureException(e);
-		}
+		panels = new ArrayList<>();
+		initPanels();
+		
 	}
 	
 	public static String getUserName() {
 		return Minecraft.getMinecraft().getSession().getUsername();
 	} 
 
+	public void initPanels() {
+		FontUtil.setupFontUtils();
+		double pwidth = 80;
+		double pheight = 15;
+		double px = 10;
+		double py = 10;
+		double pyplus = pheight + 10;
+		for (Category c : Category.values()) {
+			String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+			panels.add(new Panel(title, px, py, pwidth, pheight, false, clickgui) {
+						@Override
+						public void setup() {
+							for (Module m : moduleManager.getModules()) {
+								if (!m.getCategory().equals(c))continue;
+								this.Elements.add(new ModuleButton(m, this));
+							}
+						}
+			});
+			py += pyplus;
+		}
+		Liquido.INSTANCE.rpanels = new ArrayList<Panel>();
+		for (Panel p : Liquido.INSTANCE.panels) {
+			Liquido.INSTANCE.rpanels.add(p);
+		}
+		Collections.reverse(Liquido.INSTANCE.rpanels);
+		clickgui = new ClickGUI();
+	}
+	
 	public void onReady() {
+		
 		mc.isDemo = false;
 		System.out.println("Loaded " + NAME + " " + VERSION);
 		System.out.println("Logged in as "+getUserName());
+		
 	}
 
 	public void shutdown() {
@@ -167,9 +193,19 @@ public class Liquido {
 			}
 		}
 		EntityPlayerSP p = mc.thePlayer;
+		
+		//options
+		Booleans.clickuistyle = moduleManager.getModuleByName("clickui").getConfigByName("Style").getConfigMode().getValue();
+		Booleans.ClickUiRed = Math.round(moduleManager.getModuleByName("clickui").getConfigByName("R").doubleValue);
+		Booleans.ClickUiGreen = Math.round(moduleManager.getModuleByName("clickui").getConfigByName("G").doubleValue);
+		Booleans.ClickUiBlue = Math.round(moduleManager.getModuleByName("clickui").getConfigByName("B").doubleValue);
+		
+		Booleans.ClickUiRainbow = new Boolean(moduleManager.getModuleByName("clickui").getConfigByName("Rainbow").getValue().toString());
+		
 		//clickui
-		if(isKeyDown(Keyboard.KEY_RSHIFT)) {
-			mc.displayGuiScreen(new GuiClickUI());
+		if(isKeyDown(moduleManager.getModuleByName("clickui").getKeyBind())) {
+			clickgui = new ClickGUI();
+			mc.displayGuiScreen(clickgui);
 		}
 	}
 	
@@ -183,5 +219,8 @@ public class Liquido {
 	public static double gdd(double a, double b) {
 		return a - b;
 	}
+	
+	public ArrayList<Panel> panels;
+	public ArrayList<Panel> rpanels;
 	
 }
