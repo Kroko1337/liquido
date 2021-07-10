@@ -80,7 +80,7 @@ public class Bind extends Command {
 			saveBindings();
 		}
 	}
-	private static void saveBindings() {
+	public static void saveBindings() {
 		String text = "version="+Liquido.INSTANCE.VERSION;
 		for(Module m : Liquido.INSTANCE.moduleManager.getModules()) {
 			text = text + "\n" + m.getName() + ".bind=" + m.getKeyBind();
