@@ -27,7 +27,7 @@ public class AntiAfk extends Module{
 	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
 		mc.gameSettings.keyBindForward.pressed = true;
-		if(timer.hasReached(500)){
+		if(timer.hasReached(1000)){
 			mc.thePlayer.rotationYaw = mc.thePlayer.rotationYaw -= 90;
 			timer.reset();
 		}

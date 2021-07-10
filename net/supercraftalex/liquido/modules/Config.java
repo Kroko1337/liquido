@@ -8,7 +8,12 @@ public class Config {
 	private String name;
 	private Object v;
 	
-	private boolean isConfigMode = false;
+	public boolean isDouble = false;
+	public double doubleValue = 0.0;
+	public double doubleMin = 0;
+	public double doubleMax = 0;
+	
+	public boolean isConfigMode = false;
 	private ConfigMode mode;
 	
 	public Config(String n, Object o) {

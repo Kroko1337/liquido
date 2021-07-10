@@ -44,7 +44,17 @@ public class Scaffold2 extends Module {
 	
 	public Scaffold2() {
 		super("scaffold2", "ScaffoldWalk2", Keyboard.KEY_Z, Category.MOVEMENT);
+		addConfig(new Config("mode", true, new ConfigMode()));
+		getConfigByName("mode").getConfigMode().addMode("Normal");
 		addConfig(new Config("tower", new Boolean(false)));
+		addConfig(new Config("tower-type", true, new ConfigMode()));
+		getConfigByName("tower-type").getConfigMode().addMode("Timer");
+		getConfigByName("tower-type").getConfigMode().addMode("Motion");
+		addConfig(new Config("tower-timer", new Integer(1)));
+		getConfigByName("tower-timer").isDouble = true;
+		getConfigByName("tower-timer").doubleMax = 10;
+		getConfigByName("tower-timer").doubleMin = 1;
+		getConfigByName("tower-timer").doubleValue = 1.5;
 		addConfig(new Config("jump", new Boolean(false)));
 	}
 	
@@ -91,8 +101,10 @@ public class Scaffold2 extends Module {
 				!mc.gameSettings.keyBindLeft.pressed &&
 				tower
 				) {
-			//mc.thePlayer.motionY = 0.155;
-			mc.timer.timerSpeed = 1.5F;
+			if(getConfigByName("tower-type").getConfigMode().getValue().equalsIgnoreCase("timer"))
+				mc.timer.timerSpeed = (float) getConfigByName("tower-timer").doubleValue;
+			if(getConfigByName("tower-type").getConfigMode().getValue().equalsIgnoreCase("motion"))
+				mc.thePlayer.motionY = 0.255;
 		}
 		else {
 			mc.timer.timerSpeed = 1;

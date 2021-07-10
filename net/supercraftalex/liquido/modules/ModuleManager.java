@@ -12,6 +12,7 @@ import net.supercraftalex.liquido.modules.impl.Exploits.*;
 import net.supercraftalex.liquido.modules.impl.Movement.*;
 import net.supercraftalex.liquido.modules.impl.Player.*;
 import net.supercraftalex.liquido.modules.impl.Render.*;
+import net.supercraftalex.liquido.modules.impl.options.OptionClickUI;
 
 public class ModuleManager {
 	
@@ -53,6 +54,12 @@ public class ModuleManager {
 		addModule(new TargetStrafe());
 		addModule(new Criticals());
 		addModule(new AutoClicker());
+		
+		//Options
+		addModule(new OptionClickUI());
+		
+		//Exploits
+		addModule(new NumberChat());
 	}
 	
 	public ModuleManager() {

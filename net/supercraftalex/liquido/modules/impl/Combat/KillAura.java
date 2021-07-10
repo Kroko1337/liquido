@@ -53,11 +53,23 @@ public class KillAura extends Module{
 	
 	public KillAura() {
 		super("killaura", "KillAura", Keyboard.KEY_R, Category.COMBAT);
+		
 		addConfig(new Config("delay", new Integer(1)));
+		getConfigByName("delay").isDouble = true;
+		getConfigByName("delay").doubleMax = 10;
+		getConfigByName("delay").doubleMin = 0;
+		getConfigByName("delay").doubleValue = 2;
+		
 		addConfig(new Config("autoblock", new Boolean(false)));
 		addConfig(new Config("aiming", new Boolean(true)));
 		addConfig(new Config("Teams", new Boolean(false)));
+		
 		addConfig(new Config("range", new Integer(4)));
+		getConfigByName("range").isDouble = true;
+		getConfigByName("range").doubleMax = 5;
+		getConfigByName("range").doubleMin = 3;
+		getConfigByName("range").doubleValue = 3.4;
+		
 		addConfig(new Config("TrougthWalls", new Boolean(false)));
 		addConfig(new Config("silent", new Boolean(false)));
 		addConfig(new Config("LegitAttack", new Boolean(false)));
@@ -104,10 +116,10 @@ public class KillAura extends Module{
 
 			float f = mc.thePlayer.getDistanceToEntity(entityplayer);
 			
-			int upperBound = new Integer(getConfigByName("delay").getValue().toString());
-			int lowerBound = new Integer(getConfigByName("delay").getValue().toString())/2;
+			int upperBound = (int)getConfigByName("delay").doubleValue;
+			int lowerBound = (int)getConfigByName("delay").doubleValue/2;
 			int number = lowerBound + (int)(Math.random() * ((upperBound - lowerBound) + 1));
-			if (f <= new Integer(getConfigByName("range").getValue().toString()) && delay >= number  && entityplayer.ticksExisted > 50 && !entityplayer.isInvisible()) {
+			if (f <= getConfigByName("range").doubleValue && delay >= number  && entityplayer.ticksExisted > 50 && !entityplayer.isInvisible()) {
 				if(!(mc.thePlayer.canEntityBeSeen(entityplayer)) && !new Boolean(getConfigByName("TrougthWalls").getValue().toString())) {continue;}
 				if(entityplayer instanceof EntityItem || entityplayer instanceof EntityFishHook || entityplayer instanceof EntityArrow || entityplayer instanceof EntityPainting || entityplayer instanceof EntityExpBottle || entityplayer instanceof EntityXPOrb) {continue;}
 				if(entityplayer instanceof EntityPlayer) {if(!isNotBot((EntityPlayer)entityplayer)) {continue;}}

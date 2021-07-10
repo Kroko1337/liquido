@@ -16,6 +16,10 @@ public class AutoClicker extends Module {
 	public AutoClicker() {
 		super("autoclicker", "AutoClicker", 0, Category.COMBAT);
 		addConfig(new Config("delay", new Integer(4)));
+		getConfigByName("delay").isDouble = true;
+		getConfigByName("delay").doubleMax = 10;
+		getConfigByName("delay").doubleMin = 0;
+		getConfigByName("delay").doubleValue = 4;
 	}
 
 	TimeHelper t = new TimeHelper();
@@ -23,7 +27,7 @@ public class AutoClicker extends Module {
 	
 	@EventTarget
 	public void onUpdate(EventUpdate event) {	
-		final int delay = new Integer(getConfigByName("delay").getValue().toString());
+		final int delay = (int) getConfigByName("delay").doubleValue;
 		if(t.hasReached(delay * 100)) {
 			
 			mc.clickMouse();

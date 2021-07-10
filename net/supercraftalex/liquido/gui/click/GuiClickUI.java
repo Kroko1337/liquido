@@ -328,7 +328,7 @@ public class GuiClickUI extends GuiScreen
                 				for(Config c_o : m.getConfigs()) {
                 					if(c_o.getValue() instanceof ConfigMode) {
                 						ConfigMode cm = c_o.getConfigMode();
-                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, cm.getValue()));
+                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, c_o.getName()+": "+cm.getValue()));
                 					}
                 					if(c_o.getValue() instanceof Boolean) {
                 						if(new Boolean(c_o.getValue().toString()) == false) {
@@ -379,7 +379,7 @@ public class GuiClickUI extends GuiScreen
                 				for(Config c_o : m.getConfigs()) {
                 					if(c_o.getValue() instanceof ConfigMode) {
                 						ConfigMode cm = c_o.getConfigMode();
-                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, cm.getValue()));
+                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, c_o.getName()+": "+cm.getValue()));
                 					}
                 					if(c_o.getValue() instanceof Boolean) {
                 						if(new Boolean(c_o.getValue().toString()) == false) {
@@ -430,7 +430,7 @@ public class GuiClickUI extends GuiScreen
                 				for(Config c_o : m.getConfigs()) {
                 					if(c_o.getValue() instanceof ConfigMode) {
                 						ConfigMode cm = c_o.getConfigMode();
-                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, cm.getValue()));
+                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, c_o.getName()+": "+cm.getValue()));
                 					}
                 					if(c_o.getValue() instanceof Boolean) {
                 						if(new Boolean(c_o.getValue().toString()) == false) {
@@ -484,7 +484,7 @@ public class GuiClickUI extends GuiScreen
                 				for(Config c_o : m.getConfigs()) {
                 					if(c_o.getValue() instanceof ConfigMode) {
                 						ConfigMode cm = c_o.getConfigMode();
-                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, cm.getValue()));
+                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, c_o.getName()+": "+cm.getValue()));
                 					}
                 					if(c_o.getValue() instanceof Boolean) {
                 						if(new Boolean(c_o.getValue().toString()) == false) {
@@ -535,7 +535,7 @@ public class GuiClickUI extends GuiScreen
                 				for(Config c_o : m.getConfigs()) {
                 					if(c_o.getValue() instanceof ConfigMode) {
                 						ConfigMode cm = c_o.getConfigMode();
-                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, cm.getValue()));
+                        				this.buttonList.add(new GuiClickButton(10000+m.getId()+(confindex*100), x-10, y, 80, 20, c_o.getName()+": "+cm.getValue()));
                 					}
                 					if(c_o.getValue() instanceof Boolean) {
                 						if(new Boolean(c_o.getValue().toString()) == false) {

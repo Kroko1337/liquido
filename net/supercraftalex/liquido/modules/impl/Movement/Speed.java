@@ -35,9 +35,30 @@ public class Speed extends Module {
 	
 	public Speed() {
 		super("speed", "Speed", Keyboard.KEY_V, Category.MOVEMENT, true);
+		
 		addConfig(new Config("speed", new Integer(4)));
+		getConfigByName("speed").isDouble = true;
+		getConfigByName("speed").doubleMax = 10;
+		getConfigByName("speed").doubleMin = 0;
+		getConfigByName("speed").doubleValue = 4;
+		
 		addConfig(new Config("height", new Integer(1)));
+		getConfigByName("height").isDouble = true;
+		getConfigByName("height").doubleMax = 4;
+		getConfigByName("height").doubleMin = 0.1;
+		getConfigByName("height").doubleValue = 1;
+		
+		addConfig(new Config("timer", new Integer(10)));
+		getConfigByName("timer").isDouble = true;
+		getConfigByName("timer").doubleMax = 20;
+		getConfigByName("timer").doubleMin = 1;
+		getConfigByName("timer").doubleValue = 10;
+		
 		addConfig(new Config("length", new Integer(1)));
+		getConfigByName("length").isDouble = true;
+		getConfigByName("length").doubleMax = 10;
+		getConfigByName("length").doubleMin = 0;
+		getConfigByName("length").doubleValue = 1;
 		
 		addConfig(new Config("mode", true, new ConfigMode()));
 		getConfigByName("mode").getConfigMode().addMode("Hypixel");
@@ -47,6 +68,7 @@ public class Speed extends Module {
 		getConfigByName("mode").getConfigMode().addMode("NCP");
 		getConfigByName("mode").getConfigMode().addMode("Reflex");
 		getConfigByName("mode").getConfigMode().addMode("Mineplex");
+		getConfigByName("mode").getConfigMode().addMode("Mineplex2");
 		getConfigByName("mode").getConfigMode().addMode("CubeCraft");
 		getConfigByName("mode").getConfigMode().addMode("AAC3.2.2");
 	}
@@ -56,9 +78,10 @@ public class Speed extends Module {
 	@EventTarget
 	public void onUpdate(EventUpdate event) {
 		if(!Booleans.hacking_enabled) {return;}
-		double speed = (double)new Integer(getConfigByName("speed").getValue().toString()) / 5;
-		double bhop_height  = (double)new Integer(getConfigByName("height").getValue().toString())/6;
-		int phase_length  = new Integer(getConfigByName("length").getValue().toString());
+		double speed = getConfigByName("speed").doubleValue / 5;
+		double timer = getConfigByName("timer").doubleValue / 10;
+		double bhop_height  = getConfigByName("height").doubleValue / 6;
+		int phase_length  = (int)getConfigByName("length").doubleValue;
 		phaseloop += phase_length;
 		
 		if(getConfigByName("mode").getConfigMode().getValue() == "bhop-test") {
@@ -67,6 +90,11 @@ public class Speed extends Module {
 				float yaw = mc.thePlayer.rotationYaw * 0.017453292F;
 				mc.thePlayer.motionX -= MathHelper.sin(yaw) * (speed/5);
 				mc.thePlayer.motionZ += MathHelper.cos(yaw) * (speed/5);
+			}
+			else {
+				if(timer != 1.0) {
+					mc.timer.timerSpeed = (float) timer;
+				}
 			}
 		}
 		else if(getConfigByName("mode").getConfigMode().getValue() == "vanilla") {
@@ -112,13 +140,21 @@ public class Speed extends Module {
                 mc.timer.timerSpeed = 1;
                 mc.thePlayer.jump();
                 mc.thePlayer.motionY *= 0.9f;
-                MovementUtil.setSpeed(MovementUtil.defaultSpeed() * 1.4);
+                MovementUtil.setSpeed(MovementUtil.defaultSpeed() * 1.3);
             }
             else if(!mc.thePlayer.isCollidedHorizontally && mc.thePlayer.isAirBorne) {
-                mc.timer.timerSpeed = 1.3f;
+                mc.timer.timerSpeed = 1.2f;
                 MovementUtil.setSpeed(MovementUtil.getSpeed());
                 //MoveUtils.setSpeed(MoveUtils.defaultSpeed() * 0.98);
                 //mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
+            }
+        }
+        if (getConfigByName("mode").getConfigMode().getValue().equalsIgnoreCase("Mineplex2")) {
+        	if(mc.thePlayer.onGround) {
+        		double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
+        		mc.thePlayer.jump();
+        		mc.timer.timerSpeed = (float) 1.2;
+        		mc.thePlayer.setPosition(mc.thePlayer.posX + -Math.sin(yaw) * 0.1, mc.thePlayer.posY+0.01, mc.thePlayer.posZ + Math.cos(yaw) * 0.1);
             }
         }
         this.yaw = ((float) (this.yaw + 1.5D));

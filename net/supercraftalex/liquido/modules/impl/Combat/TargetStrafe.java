@@ -27,32 +27,12 @@ public class TargetStrafe extends Module {
         super("strafe", "TargetStrafe", 0, Category.COMBAT);
 		addConfig(new Config("mode", true, new ConfigMode()));
 		getConfigByName("mode").getConfigMode().addMode("Better");
-		getConfigByName("mode").getConfigMode().addMode("Skid");
     }
     
     Boolean BetterFinis = false;
     
     @EventTarget
     public void onUpdate(EventUpdate event) {
-    	if(getConfigByName("mode").getConfigMode().getValue().equalsIgnoreCase("skid")) {
-            final boolean keyDown = Keyboard.isKeyDown(mc.gameSettings.keyBindRight.getKeyCode());
-            final boolean keyDown2 = Keyboard.isKeyDown(mc.gameSettings.keyBindLeft.getKeyCode());
-            if (Liquido.INSTANCE.target != null && !keyDown && !keyDown2 && mc.thePlayer.getDistanceToEntity(Liquido.INSTANCE.target)<=new Integer(Liquido.INSTANCE.moduleManager.getModuleByName("killaura").getConfigByName("range").getValue().toString())) {
-                float n = OnlineRotation.getYaw((Entity)Liquido.INSTANCE.target, (Entity)mc.thePlayer) + 180.0f;
-                if (OnlineRotation.calculateRotationDiff(n + 0.15f, (float)(MathHelper.wrapAngleTo180_double((double)Liquido.INSTANCE.target.rotationYaw) + 180.0))[0] > OnlineRotation.calculateRotationDiff(n - 0.15f, (float)(MathHelper.wrapAngleTo180_double((double)Liquido.INSTANCE.target.rotationYaw) + 180.0))[0]) {
-                	mc.gameSettings.keyBindRight.pressed = true;
-                	mc.gameSettings.keyBindLeft.pressed = false;
-                }
-                else {
-                	mc.gameSettings.keyBindRight.pressed = false;
-                	mc.gameSettings.keyBindLeft.pressed = true;
-                }
-            }
-            else {
-            	mc.gameSettings.keyBindRight.pressed = keyDown;
-            	mc.gameSettings.keyBindLeft.pressed = keyDown2;
-            }
-    	}
     	if(getConfigByName("mode").getConfigMode().getValue().equalsIgnoreCase("better")) {
             if (Liquido.INSTANCE.target != null && mc.thePlayer.getDistanceToEntity(Liquido.INSTANCE.target)<=2) {
             	mc.gameSettings.keyBindLeft.pressed = true;
@@ -75,9 +55,6 @@ public class TargetStrafe extends Module {
     @Override
     public void onEnable() {
     	EventManager.register(this);
-    	if(getConfigByName("mode").getConfigMode().getValue().equalsIgnoreCase("skid")) { 
-    		Command.messageWithoutPrefix("§aTargetStrafe §c|§f Skid mode is skidded from a client named Koks.");
-    	}
     }
     
     @Override
